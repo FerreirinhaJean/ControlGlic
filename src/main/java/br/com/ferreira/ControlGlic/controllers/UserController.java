@@ -1,11 +1,17 @@
 package br.com.ferreira.ControlGlic.controllers;
 
-import br.com.ferreira.ControlGlic.dtos.CreateUserRequestDto;
-import br.com.ferreira.ControlGlic.dtos.UpdateUserRequestDto;
+import br.com.ferreira.ControlGlic.dtos.user.CreateUserRequestDto;
+import br.com.ferreira.ControlGlic.dtos.user.CreateUserResponseDto;
+import br.com.ferreira.ControlGlic.dtos.user.UpdateUserRequestDto;
+import br.com.ferreira.ControlGlic.entities.User;
 import br.com.ferreira.ControlGlic.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "users")
@@ -15,10 +21,11 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public String createUser(@RequestBody CreateUserRequestDto userRequestDto) {
-        System.out.println(userRequestDto.name());
-        userService.createUser(userRequestDto);
-        return "Create user!";
+    public ResponseEntity createUser(@RequestBody CreateUserRequestDto userRequestDto, UriComponentsBuilder uriBuilder) {
+        User user = userService.createUser(userRequestDto);
+        URI uri = uriBuilder.path("/users/{id}").buildAndExpand(user.getUuid()).toUri();
+
+        return ResponseEntity.created(uri).body(new CreateUserResponseDto(user));
     }
 
     @PutMapping(value = "/{id}")

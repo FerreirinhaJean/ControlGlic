@@ -1,4 +1,4 @@
-package br.com.ferreira.ControlGlic.dtos;
+package br.com.ferreira.ControlGlic.dtos.user;
 
 public record CreateUserRequestDto(
         String name,

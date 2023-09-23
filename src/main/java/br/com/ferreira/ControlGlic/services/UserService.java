@@ -1,7 +1,7 @@
 package br.com.ferreira.ControlGlic.services;
 
-import br.com.ferreira.ControlGlic.dtos.CreateUserRequestDto;
-import br.com.ferreira.ControlGlic.dtos.UpdateUserRequestDto;
+import br.com.ferreira.ControlGlic.dtos.user.CreateUserRequestDto;
+import br.com.ferreira.ControlGlic.dtos.user.UpdateUserRequestDto;
 import br.com.ferreira.ControlGlic.entities.User;
 import br.com.ferreira.ControlGlic.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
