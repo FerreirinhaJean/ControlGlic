@@ -6,8 +6,10 @@ import br.com.ferreira.ControlGlic.dtos.user.UpdateUserRequestDto;
 import br.com.ferreira.ControlGlic.entities.User;
 import br.com.ferreira.ControlGlic.services.UserService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,7 +23,7 @@ public class UserController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity createUser(@RequestBody CreateUserRequestDto userRequestDto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity createUser(@RequestBody @Valid CreateUserRequestDto userRequestDto, UriComponentsBuilder uriBuilder) {
         User user = userService.createUser(userRequestDto);
         URI uri = uriBuilder.path("/users/{id}").buildAndExpand(user.getUuid()).toUri();
 
