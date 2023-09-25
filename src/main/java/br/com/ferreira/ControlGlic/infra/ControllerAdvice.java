@@ -3,6 +3,7 @@ package br.com.ferreira.ControlGlic.infra;
 import br.com.ferreira.ControlGlic.dtos.exception.ExceptionErrorResponseDto;
 import br.com.ferreira.ControlGlic.dtos.exception.ExceptionMessageNotReadable;
 import br.com.ferreira.ControlGlic.entities.exceptions.ValidationException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,6 +28,12 @@ public class ControllerAdvice {
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity handleValidationException(ValidationException exception) {
         var exceptionMessageNotReadable = new ExceptionMessageNotReadable(exception);
+        return ResponseEntity.badRequest().body(exceptionMessageNotReadable);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity handleEntityNotFoundException(EntityNotFoundException exception) {
+        var exceptionMessageNotReadable = new ExceptionMessageNotReadable("User was not found");
         return ResponseEntity.badRequest().body(exceptionMessageNotReadable);
     }
 

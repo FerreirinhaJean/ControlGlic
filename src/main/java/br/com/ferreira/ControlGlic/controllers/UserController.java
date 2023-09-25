@@ -9,7 +9,6 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -44,8 +43,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public String getById(@PathVariable String id) {
-        return "Get user by id: " + id;
+    public ResponseEntity getById(@PathVariable String id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @DeleteMapping(value = "/{id}")
