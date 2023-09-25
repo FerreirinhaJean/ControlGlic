@@ -39,8 +39,8 @@ public class UserController {
     }
 
     @GetMapping
-    public String getAll() {
-        return "Get All users!";
+    public ResponseEntity getAll() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping(value = "/{id}")
