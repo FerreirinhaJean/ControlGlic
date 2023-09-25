@@ -3,6 +3,7 @@ package br.com.ferreira.ControlGlic.services;
 import br.com.ferreira.ControlGlic.dtos.user.CreateUserRequestDto;
 import br.com.ferreira.ControlGlic.dtos.user.UpdateUserRequestDto;
 import br.com.ferreira.ControlGlic.entities.User;
+import br.com.ferreira.ControlGlic.entities.exceptions.ValidationException;
 import br.com.ferreira.ControlGlic.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,26 +16,11 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    private User convertedUser(CreateUserRequestDto userRequestDto) {
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            var user = new User(
-                    userRequestDto.name(),
-                    userRequestDto.email(),
-                    simpleDateFormat.parse(userRequestDto.birthDate()),
-                    userRequestDto.password(),
-                    true
-            );
-            return user;
-        } catch (ParseException e) {
-            throw new RuntimeException("Error for parse birthDate!");
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-
     public User createUser(CreateUserRequestDto userRequestDto) {
-        User user = convertedUser(userRequestDto);
+        User user = new User(userRequestDto);
+        if (userRepository.findByEmail(user.getEmail()) != null)
+            throw new ValidationException("User with the email provided already exists");
+
         return userRepository.save(user);
     }
 

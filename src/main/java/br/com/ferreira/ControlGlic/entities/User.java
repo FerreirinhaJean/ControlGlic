@@ -1,11 +1,14 @@
 package br.com.ferreira.ControlGlic.entities;
 
+import br.com.ferreira.ControlGlic.dtos.user.CreateUserRequestDto;
 import jakarta.persistence.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,6 +30,22 @@ public class User {
         this.birthDate = birthDate;
         this.password = password;
         this.isActive = isActive;
+    }
+
+    public User(CreateUserRequestDto userRequestDto) {
+        try {
+            this.name = userRequestDto.name();
+            this.email = userRequestDto.email();
+            this.isActive = true;
+            this.password = userRequestDto.password();
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            this.birthDate = simpleDateFormat.parse(userRequestDto.birthDate());
+        } catch (ParseException parseException) {
+            throw new RuntimeException("Error converting date");
+        } catch (Exception exception) {
+            throw new RuntimeException("Error creating new user.\n" + exception.getMessage());
+        }
     }
 
     public String getUuid() {

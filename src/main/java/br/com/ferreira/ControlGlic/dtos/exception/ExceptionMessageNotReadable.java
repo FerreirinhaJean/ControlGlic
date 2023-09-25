@@ -5,7 +5,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 public record ExceptionMessageNotReadable(
         String message
 ) {
-    public ExceptionMessageNotReadable(HttpMessageNotReadableException exception) {
+    public ExceptionMessageNotReadable(Exception exception) {
         this(exception.getMessage());
     }
 }
