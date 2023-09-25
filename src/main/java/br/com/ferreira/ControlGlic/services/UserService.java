@@ -9,6 +9,7 @@ import br.com.ferreira.ControlGlic.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +62,17 @@ public class UserService {
     }
 
     public User updateUser(UpdateUserRequestDto userRequestDto, String id) {
-        User user = userRepository.findById(id).get();
-        //Verificar diferente de nulo
-
+        User user = userRepository.getReferenceById(id);
         user.setName(userRequestDto.name());
-        return userRepository.save(user);
+        user.setEmail(userRequestDto.email());
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            user.setBirthDate(simpleDateFormat.parse(userRequestDto.birthDate()));
+        } catch (ParseException parseException) {
+            throw new RuntimeException("Error converting date");
+        }
+
+        return user;
     }
 
 

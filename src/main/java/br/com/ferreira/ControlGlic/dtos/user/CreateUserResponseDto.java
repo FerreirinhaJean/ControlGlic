@@ -2,6 +2,7 @@ package br.com.ferreira.ControlGlic.dtos.user;
 
 import br.com.ferreira.ControlGlic.entities.User;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public record CreateUserResponseDto(

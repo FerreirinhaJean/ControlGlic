@@ -31,10 +31,9 @@ public class UserController {
 
     @PutMapping(value = "/{id}")
     @Transactional
-    public String updateUser(@PathVariable String id, @RequestBody UpdateUserRequestDto userRequestDto) {
-        System.out.println(id);
-        userService.updateUser(userRequestDto, id);
-        return "Update user!";
+    public ResponseEntity updateUser(@PathVariable String id, @RequestBody @Valid UpdateUserRequestDto userRequestDto) {
+        User user = userService.updateUser(userRequestDto, id);
+        return ResponseEntity.ok(new CreateUserResponseDto(user));
     }
 
     @GetMapping
