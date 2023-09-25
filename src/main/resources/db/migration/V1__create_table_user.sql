@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users(
     name VARCHAR(200) NOT NULL,
     email VARCHAR(250) UNIQUE NOT NULL,
     birth_date DATE NOT NULL,
-    password VARCHAR(60) NOT NULL,
+--    password VARCHAR(60) NOT NULL,
     update_at TIMESTAMP NOT NULL,
     is_active BOOLEAN NOT NULL DEFAULT TRUE
 );

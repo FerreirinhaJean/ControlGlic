@@ -10,8 +10,6 @@ public record CreateUserRequestDto(
         String email,
         @NotBlank(message = "birthDate is required")
         @Pattern(regexp = "^\\d{2}-\\d{2}-\\d{4}$", message = "birthDate format is not valid")
-        String birthDate,
-        @NotBlank(message = "password is required")
-        String password
+        String birthDate
 ) {
 }

@@ -16,7 +16,7 @@ public class User {
     private String name;
     private String email;
     private Date birthDate;
-    private String password;
+    //    private String password;
     private Date updateAt;
     private Boolean isActive;
 
@@ -24,11 +24,11 @@ public class User {
 
     }
 
-    public User(String name, String email, Date birthDate, String password, Boolean isActive) {
+    public User(String name, String email, Date birthDate, Boolean isActive) {
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
-        this.password = password;
+//        this.password = password;
         this.isActive = isActive;
     }
 
@@ -37,7 +37,7 @@ public class User {
             this.name = userRequestDto.name();
             this.email = userRequestDto.email();
             this.isActive = true;
-            this.password = userRequestDto.password();
+//            this.password = userRequestDto.password();
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             this.birthDate = simpleDateFormat.parse(userRequestDto.birthDate());
@@ -78,14 +78,6 @@ public class User {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Date getUpdateAt() {
