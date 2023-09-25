@@ -49,8 +49,9 @@ public class UserController {
 
     @DeleteMapping(value = "/{id}")
     @Transactional
-    public String deleteUser(@PathVariable String id) {
-        return "Delete user by id: " + id;
+    public ResponseEntity deleteUser(@PathVariable String id) {
+        userService.deactivateUser(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

@@ -52,6 +52,14 @@ public class UserService {
         return new GetUsersResponseDto(user.getUuid(), user.getName(), user.getEmail(), simpleDateFormat.format(user.getBirthDate()));
     }
 
+    public void deactivateUser(String uuid) {
+        User user = userRepository.getReferenceById(uuid);
+        if (!user.getActive())
+            throw new ValidationException("User has been deactivated");
+
+        user.setActive(false);
+    }
+
     public User updateUser(UpdateUserRequestDto userRequestDto, String id) {
         User user = userRepository.findById(id).get();
         //Verificar diferente de nulo
